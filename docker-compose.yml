@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  vikey-inference:
+    build:
+      context: .
+      args:
+        - VIKEY_API_KEY=${VIKEY_API_KEY:-your_default_api_key_here}
+        - NODE_PORT=${NODE_PORT:-11434}
+    ports:
+      - "${NODE_PORT:-11434}:${NODE_PORT:-11434}"
+    restart: unless-stopped
+    volumes:
+      - ./config:/app/config  # Untuk GAIA_CONFIG_PATH saat LLAMAEDGE_ENABLED=true
+    environment:
+      - VIKEY_API_KEY=${VIKEY_API_KEY:-your_default_api_key_here}
+      - NODE_PORT=${NODE_PORT:-11434}
+      - LLAMAEDGE_ENABLED=${LLAMAEDGE_ENABLED:-false}
+      - GAIA_CONFIG_PATH=${GAIA_CONFIG_PATH:-./config} 
